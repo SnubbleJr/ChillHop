@@ -1,39 +1,61 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
-public
-    class BHopBehaviour : MonoBehaviour
+public class BHopBehaviour : MonoBehaviour
 {
 
-    [Range(0f, 100f)] public float friction = 0.01f;
+    [Range(0f, 100f)]
+    public float friction = 0.01f;
 
-    [Range(0f, 100f)] public float ground_accelerate = 0.01f;
+    [Range(0f, 100f)]
+    public float ground_accelerate = 0.01f;
 
-    [Range(0f, 100f)] public float max_velocity_ground = 0.01f;
+    [Range(0f, 100f)]
+    public float max_velocity_ground = 0.01f;
 
-    [Range(0f, 100f)] public float air_accelerate = 0.01f;
+    [Range(0f, 100f)]
+    public float air_accelerate = 0.01f;
 
-    [Range(0f, 100f)] public float max_velocity_air = 0.01f;
+    [Range(0f, 100f)]
+    public float max_velocity_air = 0.01f;
 
-    public
-        float jumpHeight;
+    public float jumpHeight;
 
     public bool autoHop;
 
+    [Range(0, 5f)]
+    public float secondsResetAfterRunEnds = 2f;
+
     public delegate void BHopEvent();
-    public static event BHopEvent respawn;
+    public static event BHopEvent resetRun;
 
-    private
-        Rigidbody rigidbody;
+    private Rigidbody rigidbody;
 
-    private
-        bool jumped = false;
+    private bool jumped = false;
 
-    private
-        bool grounded = false;
+    private bool grounded = false;
+
+    void OnEnable()
+    {
+        EndPointBehaviour.runEnded += delayedReset;
+    }
+
+    void OnDisable()
+    {
+        EndPointBehaviour.runEnded -= delayedReset;
+    }
 
     void Awake()
     {
         rigidbody = GetComponent<Rigidbody>();
+    }
+
+    void Update()
+    {
+#if UNITY_STANDALONE || UNITY_EDITOR
+        if (Input.GetButtonDown("Jump") || Input.GetButtonDown("Fire1"))
+            reset();
+#endif
     }
 
     void FixedUpdate()
@@ -67,12 +89,32 @@ public
                 grounded = true;
                 break;
             case "Reset":
-                if (respawn != null)
-                    respawn();
+                reset();
                 break;
             default:
                 break;
         }
+    }
+
+    void reset()
+    {
+        if (resetRun == null)
+            return;
+
+        resetRun();
+        jumped = false;
+        grounded = false;
+    }
+
+    void delayedReset(float time)
+    {
+        StartCoroutine(resetAfterSecond(secondsResetAfterRunEnds));
+    }
+
+    IEnumerator resetAfterSecond(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        reset();
     }
 
     void OnCollisionExit(Collision collision)
@@ -95,24 +137,24 @@ public
 
         if (input_x < 0)
             dir *= -1f;
-//#if UNITY_STANDALONE || UNITY_EDITOR
-//#endif
+        //#if UNITY_STANDALONE || UNITY_EDITOR
+        //#endif
 
-//#if UNITY_IOS || UNITY_ANDROID
-        
-//        if (Input.touchCount > 0)
-//        {
-//            Touch touch = Input.GetTouch(0);
+        //#if UNITY_IOS || UNITY_ANDROID
 
-//            Vector2 delta = touch.deltaPosition;
+        //        if (Input.touchCount > 0)
+        //        {
+        //            Touch touch = Input.GetTouch(0);
 
-//            if (Mathf.Abs(delta.x) > 0)
-//                dir = transform.right;
+        //            Vector2 delta = touch.deltaPosition;
 
-//            if (delta.x < 0)
-//                dir *= -1f;
-//        }
-//#endif
+        //            if (Mathf.Abs(delta.x) > 0)
+        //                dir = transform.right;
+
+        //            if (delta.x < 0)
+        //                dir *= -1f;
+        //        }
+        //#endif
 
         return dir;
     }

@@ -4,58 +4,95 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public
-class TimerScript : MonoBehaviour {
+class TimerScript : MonoBehaviour
+{
+    public delegate void TimeDelegate(int val);
+    public static event TimeDelegate currTime;
 
-public
-  delegate void TimeDelegate(int val);
-public
-  static event TimeDelegate currTime;
+    private float currentTime = 0;
 
-private
-  float currentTime = 0;
+    private Text text;
+    private Image image;
 
-private
-  Text text;
+    private bool running = false;
 
-private
-  bool start = false;
+    private Color originalBGColor;
+    
+    void OnEnable()
+    {
+        StartPointBehaviour.runStarted += resetTimer;
+        EndPointBehaviour.runEnded += stopTimer;
+    }
 
-  // Use this for initialization
-  void Awake() {
-    text = GetComponent<Text>();
-    start = true;
-    setTime();
-  }
+    void OnDisable()
+    {
+        StartPointBehaviour.runStarted -= resetTimer;
+        EndPointBehaviour.runEnded -= stopTimer;
+    }
 
-  // Update is called once per frame
-  void Update() {
-    if (!start)
-      return;
+    // Use this for initialization
+    void Awake()
+    {
+        text = GetComponentInChildren<Text>();
+        image = GetComponent<Image>();
+        originalBGColor = image.color;
+        running = true;
+        setTime();
+    }
 
-    currentTime += Time.deltaTime;
+    void resetTimer(float t)
+    {
+        currentTime = 0;
+        running = true;
+        setBGColor(originalBGColor);
+    }
 
-    setTime();
-  }
+    void stopTimer(float t)
+    {
+        running = false;
+        setBGColor(Color.grey);
+    }
+    
+    private void setBGColor(Color bGColor)
+    {
+        bGColor.a = originalBGColor.a;
 
-public
-  void StartT() { start = true; }
+        image.color = bGColor;
+    }
 
-public
-  void EndT() {
-    setTime();
-    start = false;
-  }
+    // Update is called once per frame
+    void Update()
+    {
+        if (!running)
+            return;
 
-  void setTime() {
-    string str = "";
+        currentTime += Time.deltaTime;
 
-    int minComp = (int)(currentTime / 60);
-    str += minComp.ToString() + ":";
-    int secComp = (int)(currentTime - (60 * minComp));
-    if (secComp < 10)
-      str += "0";
-    str += secComp.ToString();
+        setTime();
+    }
 
-    text.text = str;
-  }
+    public void StartT()
+    {
+        running = true;
+    }
+
+    public void EndT()
+    {
+        setTime();
+        running = false;
+    }
+
+    void setTime()
+    {
+        string str = "";
+
+        int minComp = (int)(currentTime / 60);
+        str += minComp.ToString() + ":";
+        int secComp = (int)(currentTime - (60 * minComp));
+        if (secComp < 10)
+            str += "0";
+        str += secComp.ToString();
+
+        text.text = str;
+    }
 }

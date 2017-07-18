@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public
-    class Spawner : MonoBehaviour
+public class Spawner : MonoBehaviour
 {
     public float startVelocity = 5f;
 
@@ -11,12 +10,12 @@ public
 
     void OnEnable()
     {
-        BHopBehaviour.respawn += respawn;
+        StartPointBehaviour.runStarted += respawn;
     }
 
     void OnDisable()
     {
-        BHopBehaviour.respawn -= respawn;
+        StartPointBehaviour.runStarted -= respawn;
     }
 
     // Use this for initialization
@@ -26,13 +25,9 @@ public
         respawn();
     }
 
-    // Update is called once per frame
-    void Update()
+    void respawn(float time)
     {
-#if UNITY_STANDALONE || UNITY_EDITOR
-        if (Input.GetButtonDown("Jump") || Input.GetButtonDown("Fire1"))
-            respawn();
-#endif
+        respawn();
     }
 
     void respawn()
