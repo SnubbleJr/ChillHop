@@ -20,7 +20,7 @@ public
 
 #if UNITY_STANDALONE || UNITY_EDITOR
         float mouseX = Input.GetAxis("Mouse X");
-        transform.Rotate(0, mouseX * speed, 0);
+        transform.Rotate(0, mouseX, 0);
 
         if (Input.GetButtonDown("Cancel"))
         {

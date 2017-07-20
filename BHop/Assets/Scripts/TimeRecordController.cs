@@ -4,103 +4,105 @@ using UnityEngine;
 
 public class TimeRecord
 {
-    public int position { get; set; }
-    public float time { get; set; }
+    public int Position { get; set; }
+    public float Time { get; set; }
 
     public TimeRecord(int pos, float t)
     {
-        position = pos;
-        time = t;
+        Position = pos;
+        Time = t;
     }
 }
 
 public class TimeRecordController : MonoBehaviour
 {
-    public GameObject timeRecordPrefab;
+    public GameObject TimeRecordPrefab;
 
     [Range(0, 10)]
-    public float recordsToShow = 5;
+    public float RecordsToShow = 5;
 
-    private List<TimeRecord> records = new List<TimeRecord>();
+    private readonly List<TimeRecord> records = new List<TimeRecord>();
     
-    private List<TimeRecordView> recordViews = new List<TimeRecordView>();
+    private readonly List<TimeRecordView> recordViews = new List<TimeRecordView>();
 
     private float currentRecordStartTime;
 
-    void OnEnable()
+    private void OnEnable()
     {
-        StartPointBehaviour.runStarted += startNewRecord;
-        EndPointBehaviour.runEnded += endNewRecord;
+        StartPointBehaviour.runStarted += StartNewRecord;
+        EndPointBehaviour.runEnded += EndNewRecord;
     }
 
-    void OnDisable()
+    private void OnDisable()
     {
-        StartPointBehaviour.runStarted -= startNewRecord;
-        EndPointBehaviour.runEnded -= endNewRecord;
+        StartPointBehaviour.runStarted -= StartNewRecord;
+        EndPointBehaviour.runEnded -= EndNewRecord;
     }
 
-    void startNewRecord(float startTime)
+    private void StartNewRecord(float startTime)
     {
         currentRecordStartTime = startTime;
     }
 
-    void endNewRecord(float endTime)
+    private void EndNewRecord(float endTime)
     {
         float recordTime = endTime - currentRecordStartTime;
-        int position = getRecordPosition(recordTime);
+        int position = GetRecordPosition(recordTime);
 
         TimeRecord currentRecord = new TimeRecord(position, recordTime);
 
-        insertNewRecord(currentRecord);
-        updateRecordViews();
+        InsertNewRecord(currentRecord);
+        UpdateRecordViews();
     }
 
-    int getRecordPosition(float time)
+    private int GetRecordPosition(float time)
     {
         int highestPos = records.Count + 1;
 
         for (int i = 0; i < records.Count; i++)
-            if (time < records[i].time)
-                if (highestPos > records[i].position)
-                    highestPos = records[i].position;
+            if (time < records[i].Time)
+                if (highestPos > records[i].Position)
+                    highestPos = records[i].Position;
 
         return highestPos;
     }
 
-    void insertNewRecord(TimeRecord record)
+    private void InsertNewRecord(TimeRecord record)
     {
         for (int i = 0; i < records.Count; i++)
-            if (record.position <= records[i].position)
-                ++records[i].position;
+            if (record.Position <= records[i].Position)
+                ++records[i].Position;
 
         records.Add(record);
     }
 
-    void updateRecordViews()
+    private void UpdateRecordViews()
     {
         TimeRecord newestRecord = records[records.Count - 1];
 
-        if (records.Count > recordViews.Count && recordViews.Count < recordsToShow)
+        if (records.Count > recordViews.Count && recordViews.Count < RecordsToShow)
         {
-            TimeRecordView recordView = Instantiate(timeRecordPrefab, transform).GetComponent<TimeRecordView>();
+            TimeRecordView recordView = Instantiate(TimeRecordPrefab, transform).GetComponent<TimeRecordView>();
             recordViews.Add(recordView);
         }
 
         for (int i = 0; i < recordViews.Count; i++)
         {
-            TimeRecord record = getRecord(i+1);
+            TimeRecord record = GetRecord(i+1);
             if (record != null)
-                recordViews[i].setRecord(record);
+            {
+                recordViews[i].SetRecord(record);
 
-            if (record.position == newestRecord.position)
-                recordViews[i].setAsNewRecord();
+                if (record.Position == newestRecord.Position)
+                    recordViews[i].SetAsNewRecord();
+            }
         }
     }
 
-    TimeRecord getRecord(int position)
+    private TimeRecord GetRecord(int position)
     {
         for (int i = 0; i < records.Count; i++)
-            if (position == records[i].position)
+            if (position == records[i].Position)
                 return records[i];
 
         return null;

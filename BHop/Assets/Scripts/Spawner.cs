@@ -10,31 +10,26 @@ public class Spawner : MonoBehaviour
 
     void OnEnable()
     {
-        StartPointBehaviour.runStarted += respawn;
+        BHopBehaviour.resetRun += Respawn;
     }
 
     void OnDisable()
     {
-        StartPointBehaviour.runStarted -= respawn;
+        BHopBehaviour.resetRun -= Respawn;
     }
 
     // Use this for initialization
-    void Start()
+    void Awake()
     {
         player = GameObject.FindWithTag("Player").GetComponent<Rigidbody>();
-        respawn();
     }
 
-    void respawn(float time)
-    {
-        respawn();
-    }
-
-    void respawn()
+    private void Respawn()
     {
         player.transform.position = transform.position;
         player.velocity = Vector3.zero;
         player.angularVelocity = Vector3.zero;
         player.AddForce(transform.forward * startVelocity, ForceMode.Impulse);
+        player.transform.rotation = transform.rotation;
     }
 }

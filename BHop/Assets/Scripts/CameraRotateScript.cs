@@ -27,7 +27,7 @@ public
     void Update()
     {
 #if UNITY_STANDALONE || UNITY_EDITOR
-        rotationY += Input.GetAxis("Mouse Y") * speed;
+        rotationY += Input.GetAxis("Mouse Y");
 #endif
 
 #if UNITY_IOS || UNITY_ANDROID

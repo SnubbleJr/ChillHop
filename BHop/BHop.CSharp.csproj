@@ -118,10 +118,12 @@
     <Compile Include="Assets\Battlehub\UIControls\ListBoxItem.cs" />
     <Compile Include="Assets\Battlehub\Utils\EditorStopwatch.cs" />
     <Compile Include="Assets\Battlehub\Utils\Run.cs" />
+    <Compile Include="Assets\JumpAnimationScript.cs" />
     <Compile Include="Assets\Scripts\BHopBehaviour.cs" />
     <Compile Include="Assets\Scripts\CameraRotateScript.cs" />
     <Compile Include="Assets\Scripts\EndPointBehaviour.cs" />
     <Compile Include="Assets\Scripts\LookScript.cs" />
+    <Compile Include="Assets\Scripts\PhysicsData.cs" />
     <Compile Include="Assets\Scripts\Spawner.cs" />
     <Compile Include="Assets\Scripts\SpeedScript.cs" />
     <Compile Include="Assets\Scripts\StartPointBehaviour.cs" />

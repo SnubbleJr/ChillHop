@@ -226,11 +226,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a56096b0b0c93948b84d0d1d5d60b64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  positionText: {fileID: 114575497874317892}
-  timeText: {fileID: 114808280164835732}
-  positionBG: {fileID: 114373190839313756}
-  timeBG: {fileID: 114211864363280212}
-  newRecordColor: {r: 0, g: 0, b: 0, a: 1}
+  PositionText: {fileID: 114575497874317892}
+  TimeText: {fileID: 114808280164835732}
+  PositionBg: {fileID: 114373190839313756}
+  TimeBg: {fileID: 114211864363280212}
+  NewRecordColor: {r: 0, g: 0, b: 0, a: 1}
 --- !u!222 &222036889237391688
 CanvasRenderer:
   m_ObjectHideFlags: 1

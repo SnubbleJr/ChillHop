@@ -6,47 +6,47 @@ using UnityEngine.UI;
 
 public class TimeRecordView : MonoBehaviour {
 
-    public Text positionText, timeText;
-    public Image positionBG, timeBG;
+    public Text PositionText, TimeText;
+    public Image PositionBg, TimeBg;
 
-    public Color newRecordColor = Color.black;
+    public Color NewRecordColor = Color.black;
 
-    private Color originalBGColor;
+    private Color originalBgColor;
 
-    void Awake()
+    private void Awake()
     {
-        originalBGColor = positionBG.color;
+        originalBgColor = PositionBg.color;
     }
 
-    public void setRecord(TimeRecord record)
+    public void SetRecord(TimeRecord record)
     {
-        setPosition(record.position);
-        setTime(record.time);
+        SetPosition(record.Position);
+        SetTime(record.Time);
 
-        setBGColor(originalBGColor);
+        SetBgColor(originalBgColor);
     }
     
-    void setPosition(int position)
+    private void SetPosition(int position)
     {
-        positionText.text = position.ToString();
+        PositionText.text = position.ToString();
     }
 
-    void setTime(float time)
+    private void SetTime(float time)
     {
         DateTime dateTime = (new DateTime(1970, 1, 1)).AddSeconds(time);
-        timeText.text = dateTime.ToString("mm:ss:fff");
+        TimeText.text = dateTime.ToString("mm:ss:fff");
     }
 
-    public void setAsNewRecord()
+    public void SetAsNewRecord()
     {
-        setBGColor(newRecordColor);
+        SetBgColor(NewRecordColor);
     }
 
-    private void setBGColor(Color bGColor)
+    private void SetBgColor(Color bGColor)
     { 
-        bGColor.a = originalBGColor.a;
+        bGColor.a = originalBgColor.a;
 
-        positionBG.color = bGColor;
-        timeBG.color = bGColor;
+        PositionBg.color = bGColor;
+        TimeBg.color = bGColor;
     }
 }

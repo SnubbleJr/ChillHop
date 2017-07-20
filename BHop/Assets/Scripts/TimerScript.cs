@@ -1,18 +1,14 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public
-class TimerScript : MonoBehaviour
+[RequireComponent(typeof(Image))]
+public class TimerScript : MonoBehaviour
 {
-    public delegate void TimeDelegate(int val);
-    public static event TimeDelegate currTime;
+    private float currentTime = 0f;
 
-    private float currentTime = 0;
-
-    private Text text;
-    private Image image;
+    public Text text;
+    public Image image;
 
     private bool running = false;
 
@@ -20,69 +16,58 @@ class TimerScript : MonoBehaviour
     
     void OnEnable()
     {
-        StartPointBehaviour.runStarted += resetTimer;
-        EndPointBehaviour.runEnded += stopTimer;
+        StartPointBehaviour.runStarted += StartTimer;
+        EndPointBehaviour.runEnded += StopTimer;
     }
 
     void OnDisable()
     {
-        StartPointBehaviour.runStarted -= resetTimer;
-        EndPointBehaviour.runEnded -= stopTimer;
+        StartPointBehaviour.runStarted -= StartTimer;
+        EndPointBehaviour.runEnded -= StopTimer;
     }
 
     // Use this for initialization
     void Awake()
     {
-        text = GetComponentInChildren<Text>();
-        image = GetComponent<Image>();
         originalBGColor = image.color;
-        running = true;
-        setTime();
     }
-
-    void resetTimer(float t)
+    
+    private void StartTimer(float t)
     {
         currentTime = 0;
         running = true;
-        setBGColor(originalBGColor);
+        StopCoroutine(UpdateTime());
+        StartCoroutine(UpdateTime());
+        SetBGColor(originalBGColor);
     }
 
-    void stopTimer(float t)
+    private void StopTimer(float t)
     {
         running = false;
-        setBGColor(Color.grey);
+        SetTime();
+        SetBGColor(Color.grey);
     }
     
-    private void setBGColor(Color bGColor)
+    private void SetBGColor(Color bGColor)
     {
         bGColor.a = originalBGColor.a;
 
         image.color = bGColor;
     }
 
-    // Update is called once per frame
-    void Update()
+    private IEnumerator UpdateTime()
     {
-        if (!running)
-            return;
-
-        currentTime += Time.deltaTime;
-
-        setTime();
+        float waitTime = Time.timeScale;
+        WaitForSeconds timeToWait = new WaitForSeconds(waitTime);
+        while (running)
+        {
+            SetTime();
+            currentTime += waitTime;
+            yield return timeToWait;
+        }
     }
 
-    public void StartT()
-    {
-        running = true;
-    }
-
-    public void EndT()
-    {
-        setTime();
-        running = false;
-    }
-
-    void setTime()
+    private void SetTime()
     {
         string str = "";
 
