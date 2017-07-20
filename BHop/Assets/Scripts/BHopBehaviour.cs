@@ -5,14 +5,12 @@ public class BHopBehaviour : MonoBehaviour
 {
     public delegate void PlayerDelegate();
     public static event PlayerDelegate playerJumped;
+    public static event PlayerDelegate respawnPlayer;
 
     public PhysicsData Data;
 
     [Range(0, 5f)] public float secondsResetAfterRunEnds = 2f;
 
-    public delegate void BHopEvent();
-
-    public static event BHopEvent resetRun;
 
     private new Rigidbody rigidbody;
 
@@ -91,10 +89,10 @@ public class BHopBehaviour : MonoBehaviour
 
     void reset()
     {
-        if (resetRun == null)
+        if (respawnPlayer == null)
             return;
 
-        resetRun();
+        respawnPlayer();
         jumped = false;
         grounded = false;
     }

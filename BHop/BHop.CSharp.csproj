@@ -78,6 +78,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="BHop.CSharp.Plugins.csproj">
+      <Project>{C1B99F64-9FBD-DB8F-EF60-B0977EBD2A6D}</Project>
+      <Name>BHop.CSharp.Plugins</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Assets\Battlehub\Integration\IntegrationCommon.cs" />
     <Compile Include="Assets\Battlehub\Integration\MeshCombinerIntegration.cs" />
     <Compile Include="Assets\Battlehub\Integration\MeshDeformerIntegration.cs" />
@@ -118,12 +124,15 @@
     <Compile Include="Assets\Battlehub\UIControls\ListBoxItem.cs" />
     <Compile Include="Assets\Battlehub\Utils\EditorStopwatch.cs" />
     <Compile Include="Assets\Battlehub\Utils\Run.cs" />
+    <Compile Include="Assets\CheckpointManagerBehaviour.cs" />
     <Compile Include="Assets\JumpAnimationScript.cs" />
     <Compile Include="Assets\Scripts\BHopBehaviour.cs" />
     <Compile Include="Assets\Scripts\CameraRotateScript.cs" />
+    <Compile Include="Assets\Scripts\CheckpointBehaviour.cs" />
     <Compile Include="Assets\Scripts\EndPointBehaviour.cs" />
     <Compile Include="Assets\Scripts\LookScript.cs" />
     <Compile Include="Assets\Scripts\PhysicsData.cs" />
+    <Compile Include="Assets\Scripts\RespawnData.cs" />
     <Compile Include="Assets\Scripts\Spawner.cs" />
     <Compile Include="Assets\Scripts\SpeedScript.cs" />
     <Compile Include="Assets\Scripts\StartPointBehaviour.cs" />
@@ -139,6 +148,12 @@
     <None Include="Assets\Battlehub\RTHandles\Shaders\Resources\VertexColorClip.shader" />
     <None Include="Assets\Battlehub\SplineEditor\Shaders\Resources\SSBillboard.shader" />
     <None Include="Assets\Battlehub\SplineEditor\Shaders\Resources\Spline.shader" />
+    <None Include="Assets\Plugins\Zenject\LICENSE.txt" />
+    <None Include="Assets\Plugins\Zenject\OptionalExtras\SampleGame1 (Beginner)\Media\Fonts\Space.txt" />
+    <None Include="Assets\Plugins\Zenject\OptionalExtras\SampleGame1 (Beginner)\Media\Imported\Shaders\AddSmooth_Layer.shader" />
+    <None Include="Assets\Plugins\Zenject\OptionalExtras\SampleGame1 (Beginner)\Media\Imported\Shaders\Add_Layer.shader" />
+    <None Include="Assets\Plugins\Zenject\OptionalExtras\SampleGame1 (Beginner)\Media\Imported\Shaders\Particle Alpha Blend_IgnoreFog.shader" />
+    <None Include="Assets\Plugins\Zenject\Version.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>

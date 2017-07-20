@@ -127,6 +127,14 @@
       <Project>{F3690CFE-6B91-2DD2-F898-5D518EEF6933}</Project>
       <Name>BHop.CSharp</Name>
     </ProjectReference>
+    <ProjectReference Include="BHop.CSharp.Plugins.csproj">
+      <Project>{C1B99F64-9FBD-DB8F-EF60-B0977EBD2A6D}</Project>
+      <Name>BHop.CSharp.Plugins</Name>
+    </ProjectReference>
+    <ProjectReference Include="BHop.CSharp.Editor.Plugins.csproj">
+      <Project>{32E83C73-EEA9-F0F2-DF17-D5AD0D7466CC}</Project>
+      <Name>BHop.CSharp.Editor.Plugins</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Battlehub\Integration\Editor\CommandsPanel.cs" />
@@ -155,6 +163,12 @@
     <None Include="Assets\Battlehub\RTHandles\Shaders\Resources\VertexColorClip.shader" />
     <None Include="Assets\Battlehub\SplineEditor\Shaders\Resources\SSBillboard.shader" />
     <None Include="Assets\Battlehub\SplineEditor\Shaders\Resources\Spline.shader" />
+    <None Include="Assets\Plugins\Zenject\LICENSE.txt" />
+    <None Include="Assets\Plugins\Zenject\OptionalExtras\SampleGame1 (Beginner)\Media\Fonts\Space.txt" />
+    <None Include="Assets\Plugins\Zenject\OptionalExtras\SampleGame1 (Beginner)\Media\Imported\Shaders\AddSmooth_Layer.shader" />
+    <None Include="Assets\Plugins\Zenject\OptionalExtras\SampleGame1 (Beginner)\Media\Imported\Shaders\Add_Layer.shader" />
+    <None Include="Assets\Plugins\Zenject\OptionalExtras\SampleGame1 (Beginner)\Media\Imported\Shaders\Particle Alpha Blend_IgnoreFog.shader" />
+    <None Include="Assets\Plugins\Zenject\Version.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>

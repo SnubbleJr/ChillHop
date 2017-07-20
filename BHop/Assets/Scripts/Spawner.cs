@@ -4,32 +4,27 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
-    public float startVelocity = 5f;
-
+    public RespawnData Data;
     private Rigidbody player;
-
-    void OnEnable()
-    {
-        BHopBehaviour.resetRun += Respawn;
-    }
-
-    void OnDisable()
-    {
-        BHopBehaviour.resetRun -= Respawn;
-    }
 
     // Use this for initialization
     void Awake()
     {
+        //depenancy injection here
         player = GameObject.FindWithTag("Player").GetComponent<Rigidbody>();
     }
 
-    private void Respawn()
+    public void Respawn()
     {
         player.transform.position = transform.position;
-        player.velocity = Vector3.zero;
-        player.angularVelocity = Vector3.zero;
-        player.AddForce(transform.forward * startVelocity, ForceMode.Impulse);
-        player.transform.rotation = transform.rotation;
+
+        if (Data.ResetOrientation)
+            player.transform.rotation = transform.rotation;
+        
+        if (Data.RetainVelocity)
+            player.velocity = transform.forward * player.velocity.magnitude;
+        else        
+            player.velocity = transform.forward * Data.SpawnVelocity;
+        
     }
 }

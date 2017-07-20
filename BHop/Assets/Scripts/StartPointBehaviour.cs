@@ -9,17 +9,17 @@ public class StartPointBehaviour : MonoBehaviour
 
     void OnEnable()
     {
-        BHopBehaviour.resetRun += startRun;
+        CheckpointManagerBehaviour.RespawnCalled += RestartRun;
     }
 
     void OnDisable()
     {
-        BHopBehaviour.resetRun -= startRun;
+        CheckpointManagerBehaviour.RespawnCalled -= RestartRun;
     }
 
-    void startRun()
+    void RestartRun(int checkpointNo)
     {
-        if (runStarted != null)
+        if (checkpointNo == 0 && runStarted != null)
             runStarted(Time.time);
     }
 }

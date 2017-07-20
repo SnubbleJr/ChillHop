@@ -35,9 +35,12 @@ public class TimerScript : MonoBehaviour
     private void StartTimer(float t)
     {
         currentTime = 0;
-        running = true;
-        StopCoroutine(UpdateTime());
-        StartCoroutine(UpdateTime());
+        SetTime();
+        if (!running)
+        {
+            running = true;
+            StartCoroutine(UpdateTime());
+        }
         SetBGColor(originalBGColor);
     }
 
