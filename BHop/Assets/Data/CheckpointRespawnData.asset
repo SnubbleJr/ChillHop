@@ -9,8 +9,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5493f08ccdc921448abbc934e92a2f1d, type: 3}
-  m_Name: RespawnData
+  m_Name: CheckpointRespawnData
   m_EditorClassIdentifier: 
-  RetainVelocity: 1
+  RetainVelocity: 0
   SpawnVelocity: 10
   ResetOrientation: 1

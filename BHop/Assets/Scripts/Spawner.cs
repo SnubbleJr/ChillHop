@@ -1,30 +1,46 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 public class Spawner : MonoBehaviour
 {
-    public RespawnData Data;
-    private Rigidbody player;
+    [Range(0f, 100f)]
+    public float SpawnVelocity = 10f;
 
-    // Use this for initialization
-    void Awake()
+    private RespawnData checkpointRespawnData;
+    private RespawnData startRespawnData;
+    private Rigidbody playeRigidbody;
+
+    [Inject]
+    public void Init([Inject(Id = "CheckpointRespawn")] RespawnData data, [Inject(Id = "StartRespawn")] RespawnData spawnData,
+        [Inject(Id = "PlayerBody")] Rigidbody playeRigidbody)
     {
-        //depenancy injection here
-        player = GameObject.FindWithTag("Player").GetComponent<Rigidbody>();
+        this.checkpointRespawnData = data;
+        this.startRespawnData = spawnData;
+        this.playeRigidbody = playeRigidbody;
     }
 
     public void Respawn()
     {
-        player.transform.position = transform.position;
+        RespawnPlayer(checkpointRespawnData);
+    }
 
-        if (Data.ResetOrientation)
-            player.transform.rotation = transform.rotation;
-        
-        if (Data.RetainVelocity)
-            player.velocity = transform.forward * player.velocity.magnitude;
-        else        
-            player.velocity = transform.forward * Data.SpawnVelocity;
-        
+    public void RespawnFromStart()
+    {
+        RespawnPlayer(startRespawnData);
+    }
+
+    private void RespawnPlayer(RespawnData data)
+    {
+        playeRigidbody.transform.position = transform.position;
+
+        if (data.ResetOrientation)
+            playeRigidbody.transform.rotation = transform.rotation;
+
+        if (data.RetainVelocity)
+            playeRigidbody.velocity = transform.forward * playeRigidbody.velocity.magnitude;
+        else
+            playeRigidbody.velocity = transform.forward * SpawnVelocity;
     }
 }

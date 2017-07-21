@@ -7,6 +7,7 @@ using UnityEngine;
 public class CheckpointBehaviour : MonoBehaviour
 {
     public delegate void CheckpointEvent(int checkpointNo);
+
     public static event CheckpointEvent checkpointHit;
 
     public int CheckpointNumber;
@@ -33,7 +34,10 @@ public class CheckpointBehaviour : MonoBehaviour
         if (CheckpointNumber != checkpointNo)
             return;
 
-        spawner.Respawn();
+        if (CheckpointNumber == 0)
+            spawner.RespawnFromStart();
+        else
+            spawner.Respawn();
     }
 
     void OnTriggerEnter(Collider other)

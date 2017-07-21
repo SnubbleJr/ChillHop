@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using Zenject;
 
 public class BHopBehaviour : MonoBehaviour
 {
@@ -7,16 +8,22 @@ public class BHopBehaviour : MonoBehaviour
     public static event PlayerDelegate playerJumped;
     public static event PlayerDelegate respawnPlayer;
 
-    public PhysicsData Data;
+    private PhysicsData data;
 
     [Range(0, 5f)] public float secondsResetAfterRunEnds = 2f;
-
+    
 
     private new Rigidbody rigidbody;
 
     private bool jumped = false;
 
     private bool grounded = false;
+
+    [Inject]
+    public void Init(PhysicsData physicsData)
+    {
+        data = physicsData;
+    }
 
     void OnEnable()
     {
@@ -48,7 +55,7 @@ public class BHopBehaviour : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (Data.autoHop)
+        if (data.autoHop)
             autoJump();
 
         Vector3 accelDir = getAccelDirection();
@@ -68,7 +75,7 @@ public class BHopBehaviour : MonoBehaviour
         if (playerJumped != null)
             playerJumped();
 
-        rigidbody.AddForce(Vector3.up * Data.jumpHeight);
+        rigidbody.AddForce(Vector3.up * data.jumpHeight);
         jumped = true;
     }
 
@@ -180,20 +187,20 @@ public class BHopBehaviour : MonoBehaviour
         float speed = prevVelocity.magnitude;
         if (speed != 0) // To avoid divide by zero errors
         {
-            float drop = speed * Data.friction * Time.fixedDeltaTime;
+            float drop = speed * data.friction * Time.fixedDeltaTime;
             prevVelocity *= Mathf.Max(speed - drop, 0) /
                             speed; // Scale the velocity based on friction.
         }
 
         // ground_accelerate and max_velocity_ground are server-defined movement
         // variables
-        return Accelerate(accelDir, prevVelocity, Data.ground_accelerate,
-            Data.max_velocity_ground);
+        return Accelerate(accelDir, prevVelocity, data.ground_accelerate,
+            data.max_velocity_ground);
     }
 
     private Vector3 MoveAir(Vector3 accelDir, Vector3 prevVelocity)
     {
         // air_accelerate and max_velocity_air are server-defined movement variables
-        return Accelerate(accelDir, prevVelocity, Data.air_accelerate, Data.max_velocity_air);
+        return Accelerate(accelDir, prevVelocity, data.air_accelerate, data.max_velocity_air);
     }
 }

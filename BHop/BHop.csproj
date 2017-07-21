@@ -13,13 +13,11 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile>
-    </CompilerResponseFile>
+    <CompilerResponseFile></CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>Android:13</UnityBuildTarget>
     <UnityVersion>2017.1.0f3</UnityVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <LangVersion Condition=" '$(VisualStudioVersion)' != '10.0' ">4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -80,6 +78,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="BHop.Plugins.csproj">
+      <Project>{5C38C382-3243-EBF8-0AD6-5807323B8020}</Project>
+      <Name>BHop.Plugins</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Assets\Battlehub\Integration\IntegrationCommon.cs" />
     <Compile Include="Assets\Battlehub\Integration\MeshCombinerIntegration.cs" />
     <Compile Include="Assets\Battlehub\Integration\MeshDeformerIntegration.cs" />
@@ -120,12 +124,16 @@
     <Compile Include="Assets\Battlehub\UIControls\ListBoxItem.cs" />
     <Compile Include="Assets\Battlehub\Utils\EditorStopwatch.cs" />
     <Compile Include="Assets\Battlehub\Utils\Run.cs" />
-    <Compile Include="Assets\JumpAnimationScript.cs" />
     <Compile Include="Assets\Scripts\BHopBehaviour.cs" />
     <Compile Include="Assets\Scripts\CameraRotateScript.cs" />
+    <Compile Include="Assets\Scripts\CheckpointBehaviour.cs" />
+    <Compile Include="Assets\Scripts\CheckpointManagerBehaviour.cs" />
     <Compile Include="Assets\Scripts\EndPointBehaviour.cs" />
+    <Compile Include="Assets\Scripts\JumpAnimationScript.cs" />
     <Compile Include="Assets\Scripts\LookScript.cs" />
+    <Compile Include="Assets\Scripts\MainInstaller.cs" />
     <Compile Include="Assets\Scripts\PhysicsData.cs" />
+    <Compile Include="Assets\Scripts\RespawnData.cs" />
     <Compile Include="Assets\Scripts\Spawner.cs" />
     <Compile Include="Assets\Scripts\SpeedScript.cs" />
     <Compile Include="Assets\Scripts\StartPointBehaviour.cs" />
@@ -141,6 +149,12 @@
     <None Include="Assets\Battlehub\RTHandles\Shaders\Resources\VertexColorClip.shader" />
     <None Include="Assets\Battlehub\SplineEditor\Shaders\Resources\SSBillboard.shader" />
     <None Include="Assets\Battlehub\SplineEditor\Shaders\Resources\Spline.shader" />
+    <None Include="Assets\Plugins\Zenject\LICENSE.txt" />
+    <None Include="Assets\Plugins\Zenject\OptionalExtras\SampleGame1 (Beginner)\Media\Fonts\Space.txt" />
+    <None Include="Assets\Plugins\Zenject\OptionalExtras\SampleGame1 (Beginner)\Media\Imported\Shaders\AddSmooth_Layer.shader" />
+    <None Include="Assets\Plugins\Zenject\OptionalExtras\SampleGame1 (Beginner)\Media\Imported\Shaders\Add_Layer.shader" />
+    <None Include="Assets\Plugins\Zenject\OptionalExtras\SampleGame1 (Beginner)\Media\Imported\Shaders\Particle Alpha Blend_IgnoreFog.shader" />
+    <None Include="Assets\Plugins\Zenject\Version.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
